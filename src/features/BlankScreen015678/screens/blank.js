@@ -28,13 +28,19 @@ export default class Blank extends React.Component {
 
   render = () => (
     <View style={styles.View_1}>
-      <ImageBackground
-        source={{
-          uri:
-            "https://crowdbotics-slack-dev.s3.amazonaws.com/media/project_component_resources/halfbg_fFmiqg5.png"
-        }}
-        style={styles.ImageBackground_3}
-      />
+      <ImageBackground style={styles.ImageBackground_3}>
+        <Image
+          resizeMode="contain"
+          source={{
+            uri:
+              "https://crowdbotics-slack-dev.s3.amazonaws.com/media/project_component_resources/cb-icon_1mmogwJ.png"
+          }}
+          style={styles.Image_10}
+        />
+      </ImageBackground>
+      <View style={styles.View_12}>
+        <Text style={styles.Text_9}>Sign In</Text>
+      </View>
     </View>
   )
 }
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
   View_1: {
     width: "100%",
     height: "50%",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     alignContent: "center"
   },
@@ -54,5 +60,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignContent: "center",
     backgroundSize: "contain"
-  }
+  },
+  Image_10: { width: 155, height: 155, alignSelf: "center" },
+  View_12: {
+    width: "100%",
+    height: "80%",
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: -80,
+    marginBottom: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center"
+  },
+  Text_9: { alignSelf: "center", fontSize: 25 }
 })
