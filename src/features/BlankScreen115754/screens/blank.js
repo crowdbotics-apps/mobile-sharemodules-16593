@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { api_v1_login_create } from "../../../store/actions.js"
+import { rest_auth_login_create } from "../../../store/actions.js"
 import {
   View,
   Image,
@@ -99,7 +99,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (email, password) => dispatch(api_v1_login_create({email, password})),
+    login: (email, password) => dispatch(rest_auth_login_create({email, password})),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Blank);
