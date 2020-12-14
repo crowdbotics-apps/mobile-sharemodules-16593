@@ -23,7 +23,7 @@ const TextInputField = props => (
       underlineColorAndroid={'transparent'}
       {...props}
     />
-    {!!props.error && <Text style={textInput.error}>{props.error}</Text>}
+    {!!props.error && <Text style={styles.error}>{props.error}</Text>}
   </View>
 );
 
