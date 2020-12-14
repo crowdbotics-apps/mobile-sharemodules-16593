@@ -1,6 +1,6 @@
 import * as types from "./constants"
 
-const initialState = { mobileShareModulesAPI: [] }
+const initialState = { mobileShareModulesAPI: [], error: null }
 
 export default function apiReducer(state = initialState, action) {
   switch (action.type) {
@@ -56,20 +56,24 @@ export default function apiReducer(state = initialState, action) {
     case types.API_V1_LOGIN_CREATE_SUCCEEDED:
     case types.API_V1_LOGIN_CREATE_FAILED:
       return Object.assign({}, state, {
-        mobileShareModulesAPI: [...state.mobileShareModulesAPI, action.response]
+        mobileShareModulesAPI: [...state.mobileShareModulesAPI, action]
       })
     case types.API_V1_SIGNUP_CREATE:
     case types.API_V1_SIGNUP_CREATE_SUCCEEDED:
     case types.API_V1_SIGNUP_CREATE_FAILED:
+      
       return Object.assign({}, state, {
         mobileShareModulesAPI: [...state.mobileShareModulesAPI, action.response]
       })
     case types.REST_AUTH_LOGIN_CREATE:
     case types.REST_AUTH_LOGIN_CREATE_SUCCEEDED:
+      return Object.assign({}, state, {
+        mobileShareModulesAPI: [...state.mobileShareModulesAPI, action.response ]
+      })
     case types.REST_AUTH_LOGIN_CREATE_FAILED:
       return Object.assign({}, state, {
-        mobileShareModulesAPI: [...state.mobileShareModulesAPI, action.response]
-      })
+        error: action.error,
+      });  
     case types.REST_AUTH_LOGOUT_LIST:
     case types.REST_AUTH_LOGOUT_LIST_SUCCEEDED:
     case types.REST_AUTH_LOGOUT_LIST_FAILED:

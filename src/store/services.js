@@ -1,6 +1,6 @@
 import axios from "axios"
 const mobileShareModulesAPI = axios.create({
-  baseURL: "https://mobile-sharemodules-16593-prod.herokuapp.com/",
+  baseURL: "https://mobile-sharemodules-16593.botics.co/",
   headers: { Accept: "application/json", "Content-Type": "application/json" }
 })
 function api_v1_customtext_list(action) {

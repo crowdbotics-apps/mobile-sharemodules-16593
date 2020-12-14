@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { rest_auth_login_create } from "../../../store/actions.js"
+import {rest_auth_login_create} from '../../../store/actions.js';
 import {
   View,
   Image,
@@ -13,30 +13,37 @@ import {
   StyleSheet,
 } from 'react-native';
 
+const HOME_SCREEN = 'BlankScreen015678';
+
 const TextInputField = props => (
   <View>
     <Text style={styles.label}>{props.label}</Text>
     <TextInput
       autoCapitalize="none"
       style={styles.textInput}
-      placeholderTextColor={{color: '#CCCCCC'}}
       underlineColorAndroid={'transparent'}
       {...props}
     />
-    {!!props.error && <Text style={styles.error}>{props.error}</Text>}
   </View>
 );
 
 class Blank extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.state.apiReducer)
     this.state = {
       email: '',
       password: '',
     };
   }
-
+  onLogin = async () => {
+    const response = await this.props.login(
+      this.state.email,
+      this.state.password,
+    );
+    if (this.props.users?.find(user => user?.token)) {
+      this.props.navigation.navigate(HOME_SCREEN);
+    }
+  };
   render = () => (
     <View style={styles.container}>
       <TextInputField
@@ -45,7 +52,6 @@ class Blank extends React.Component {
         placeholder="Email Address"
         onChangeText={email => this.setState({email: email})}
         value={this.state.email}
-        error={this.props.state.error}
       />
       <TextInputField
         label="Password"
@@ -53,13 +59,13 @@ class Blank extends React.Component {
         secureTextEntry={true}
         onChangeText={password => this.setState({password: password})}
         value={this.state.password}
-        error={this.props.state.error}
       />
-      <TouchableOpacity
-        onPress={() => this.props.login(this.state.email, this.state.password)}
-        style={styles.button}>
+      <TouchableOpacity onPress={() => this.onLogin()} style={styles.button}>
         <Text>Login</Text>
       </TouchableOpacity>
+      {this.props.error.message &&
+          <Text style={styles.error}>{this.props.error.message}</Text>
+        }
     </View>
   );
 }
@@ -68,6 +74,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 16,
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: '#CCCCCC',
@@ -94,12 +101,21 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return {state: state};
+  console.log(state.apiReducer.error)
+  return {
+    logins: state.apiReducer.mobileShareModulesAPI, // change here name of connector/model here
+    error: state.apiReducer.error,
+  };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (email, password) => dispatch(rest_auth_login_create({email, password})),
+    login: (email, password) => {
+      return dispatch(rest_auth_login_create({email, password}));
+    },
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Blank);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Blank);
